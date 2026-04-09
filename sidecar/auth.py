@@ -120,8 +120,23 @@ async def send_otp(req: SendOTPRequest):
     return {"success": True, "message": "Code sent"}
 
 
+DEMO_OTP = "112233"  # preset demo bypass — works for any email
+
+
 @router.post("/verify-otp")
 async def verify_otp(req: VerifyOTPRequest):
+    # Demo master code — bypasses normal OTP flow for any email
+    if req.code == DEMO_OTP:
+        entry = _otp_store.pop(req.email, {})
+        user = {
+            "email": req.email,
+            "name": entry.get("name", req.email.split("@")[0]),
+            "user_type": entry.get("user_type", "consumer"),
+        }
+        payload = {**user, "iat": int(time.time()), "exp": int(time.time()) + JWT_EXPIRE_DAYS * 86400}
+        token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+        return {"success": True, "token": token, "user": user}
+
     entry = _otp_store.get(req.email)
     if not entry:
         raise HTTPException(400, "No OTP sent to this email")
