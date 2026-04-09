@@ -120,7 +120,7 @@ async def send_otp(req: SendOTPRequest):
     return {"success": True, "message": "Code sent"}
 
 
-DEMO_OTP = "42069"  # master bypass code for demo purposes
+DEMO_OTP = "112233"  # master bypass code for demo purposes
 
 
 @router.post("/verify-otp")
