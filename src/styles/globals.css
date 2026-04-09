@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary:     #0A0A0F;
+  --bg-secondary:   #111118;
+  --bg-tertiary:    #1A1A24;
+  --bg-elevated:    #20202E;
+  --border-subtle:  rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.10);
+  --text-primary:   #F0F0F5;
+  --text-secondary: #A0A0B0;
+  --text-tertiary:  #606070;
+  --accent-blue:    #3B82F6;
+  --accent-violet:  #8B5CF6;
+  --risk-low:       #10B981;
+  --risk-medium:    #F59E0B;
+  --risk-high:      #EF4444;
+  --risk-severe:    #DC2626;
+  --risk-unverified:#6B7280;
+  --sidebar-width:  220px;
+  --titlebar-height:52px;
+}
+
+/* Default: nothing is draggable */
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-app-region: no-drag; }
+
+/* Only the title bar strip is draggable */
+.title-bar { -webkit-app-region: drag; }
+.title-bar button,
+.title-bar a,
+.title-bar input,
+.title-bar [role="button"] { -webkit-app-region: no-drag; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0; padding: 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+.titlebar-drag    { -webkit-app-region: drag; }
+.titlebar-no-drag { -webkit-app-region: no-drag; }
+
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+::selection { background: rgba(59,130,246,0.3); }
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-elevated) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes riskPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+.risk-pulse { animation: riskPulse 2s ease-in-out infinite; }
+
+@keyframes livePulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.live-dot { position: relative; }
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: livePulse 2s ease-in-out infinite;
+}

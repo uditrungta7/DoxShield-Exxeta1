@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+out/
+dist/
+
+# Python
+sidecar/.venv/
+sidecar/venv/
+sidecar/__pycache__/
+sidecar/**/__pycache__/
+sidecar/**/*.pyc
+sidecar/dist/
+/tmp/pyinstaller-work/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Electron
+*.log
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/settings.json
+
+# Auth / secrets
+auth.enc
